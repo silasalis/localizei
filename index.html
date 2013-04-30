@@ -3,7 +3,7 @@
     <meta charset = "UTF-8">
     <title>Google Places Geolocation API</title>
     <link rel="stylesheet" href="css/geo.css" media="all" />
-    <link rel = "shortcut icon" href = "favicon.ico" type = "image/x-icon">
+    <link rel = "shortcut icon" href = "img/favicon.ico" type = "image/x-icon">
     <link rel = "icon" href = "img/icon.png" sizes = "32x32">    
 	<script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/modernizr-2.0.6-development-only.js"></script>
@@ -40,32 +40,43 @@
                </li> 
 
                 <li class="hotel">
-                    <a href="#"></a>
+                    <a href="#" id = "hotel">
+                    </a>
                 </li>
 
                 <li class="comida">
-                    <a href=""></a>
+                    <a href="#" id = "comida"></a>
                 </li>
 
                 <li class="saude">
-                    <a href=""></a>
+                    <a href="#" id = "saude"></a>
                 </li>
             </ul>
         </div>
 
       <div id="map"></div>     
 
-	<script type="text/javascript">
+
+</body>
+
+<script type="text/javascript">
 
 $(document).ready(function () {
-
+   
 $("#showhide").click(function () {
-$("#search_query").animate({width:'toggle'},500);
-// $(this).toggleClass("closed");
+       $("#search_query").animate({width:'toggle'},500);
+        // $(this).toggleClass("closed");
+    });
+
+
+
+
+
+
 });
-});
+
+
+
 </script>
-	  
-</body>
 
 </html>

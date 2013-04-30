@@ -25,9 +25,38 @@ $(document).ready(function(){
         var places_service = new google.maps.places.PlacesService(map);
         places_service.search(request,loadPlaces);
     });
-    
+    $('#hotel').live('click',function(){
+        clearPlaces();
+        var request = {
+             location: lat_lon,
+              radius: 5000,
+              name: "hotel",
+        };
+        var places_service = new google.maps.places.PlacesService(map);
+        places_service.search(request,loadPlaces);
+    });
+    $('#comida').live('click',function(){
+        clearPlaces();
+        var request = {
+             location: lat_lon,
+              radius: 5000,
+            types: ['restaurant', 'food', 'cafe', 'bar']
+        };
+        var places_service = new google.maps.places.PlacesService(map);
+        places_service.search(request,loadPlaces);
+    });
+     $('#saude').live('click',function(){
+        clearPlaces();
+        var request = {
+             location: lat_lon,
+              radius: 5000,
+            types: ['hospital', 'pharmacy', 'doctor', 'dentist']
+        };
+        var places_service = new google.maps.places.PlacesService(map);
+        places_service.search(request,loadPlaces);
+    });
     var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_query'));
-    google.maps.event.addListener(autocomplete,'place_changed',function(){
+    google.maps.event.addListener(autocomplete,function(){
         clearPlaces();
         var place = autocomplete.getPlace();
         if(place.geometry.viewport){
@@ -36,7 +65,7 @@ $(document).ready(function(){
             map.setCenter(place.geometry.location);
             map.setZoom(17);
         }
-        var image = new google.maps.MarkerImage(
+         var image = new google.maps.MarkerImage(
             place.icon, new google.maps.Size(71,71),
             new google.maps.Point(0,0), new google.maps.Point(17,34),
             new google.maps.Size(35,35));
@@ -109,7 +138,7 @@ function show_map(position){
       position: lat_lon, 
       map: map, 
       icon: home_image,
-      title:"Você está aqui!!",
+      title:"You are here!",
       animation: google.maps.Animation.BOUNCE
   });   
 }
@@ -151,7 +180,6 @@ function addTableRow(place){
     });
     $('table').find('tbody').append(html);
 }
-
 function clearPlaces(){
     $.each(places_markers,function(i,marker){
         if(marker != undefined){
