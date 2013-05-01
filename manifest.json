@@ -1,16 +1,13 @@
 {
-  "name": "Localizei.me",
-  "version": "0.1",
   "manifest_version": 2,
-  "minimum_chrome_version": "23",
-  "permissions": [
-    "webview",
-    "geolocation",
-	"http://www.agenciasued.com.br/localizei"
-  ],
+  "name": "Localizei Beta",
+  "version": "0.2",
+  "permissions": ["webview", "geolocation"],
   "app": {
     "background": {
-      "scripts": ["js/test.js"]
+      "scripts": ["main.js"]
     }
-  }
+  },
+  "icons": { "16": "16x16.jpg", "128": "128x128.jpg" }
+
 }
