@@ -33,7 +33,7 @@ $(document).ready(function(){
               name: "hotel",
         };
         var places_service = new google.maps.places.PlacesService(map);
-        places_service.search(request,loadPlaces);
+        places_service.search(request,loadPlacesHotel);
     });
     $('#comida').live('click',function(){
         clearPlaces();
@@ -43,17 +43,17 @@ $(document).ready(function(){
             types: ['restaurant', 'food', 'cafe', 'bar']
         };
         var places_service = new google.maps.places.PlacesService(map);
-        places_service.search(request,loadPlaces);
+        places_service.search(request,loadPlacesRest);
     });
      $('#saude').live('click',function(){
         clearPlaces();
         var request = {
              location: lat_lon,
               radius: 5000,
-            types: ['hospital', 'pharmacy', 'doctor', 'dentist']
+            types: ['hospital', 'pharmacy', 'doctor', 'dentist', 'clinical']
         };
         var places_service = new google.maps.places.PlacesService(map);
-        places_service.search(request,loadPlaces);
+        places_service.search(request,loadPlacesSaude);
     });
     var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_query'));
     google.maps.event.addListener(autocomplete,function(){
@@ -108,7 +108,7 @@ function get_location(){
     if(Modernizr.geolocation){
         navigator.geolocation.getCurrentPosition(show_map);
     }else{
-        $('#map').html('<p>Your browser does not support geo-location</p>');
+        $('#map').html('<p>Seu navegador não suporta geo-localização!</p>');
     }
 }
 
@@ -138,7 +138,7 @@ function show_map(position){
       position: lat_lon, 
       map: map, 
       icon: home_image,
-      title:"You are here!",
+      title:"Você está aqui!",
       animation: google.maps.Animation.BOUNCE
   });   
 }
@@ -148,6 +148,33 @@ function loadPlaces(results, status){
         $('table').find('tbody').html('');
         $.each(results,function(i, place){
             createMarker(place);
+            addTableRow(place);
+        });   
+    }
+}
+function loadPlacesRest(results, status){
+    if(status == google.maps.places.PlacesServiceStatus.OK){
+        $('table').find('tbody').html('');
+        $.each(results,function(i, place){
+            createMarkerRest(place);
+            addTableRow(place);
+        });   
+    }
+}
+function loadPlacesSaude(results, status){
+    if(status == google.maps.places.PlacesServiceStatus.OK){
+        $('table').find('tbody').html('');
+        $.each(results,function(i, place){
+            createMarkerSaude(place);
+            addTableRow(place);
+        });   
+    }
+}
+function loadPlacesHotel(results, status){
+    if(status == google.maps.places.PlacesServiceStatus.OK){
+        $('table').find('tbody').html('');
+        $.each(results,function(i, place){
+            createMarkerHotel(place);
             addTableRow(place);
         });   
     }
@@ -170,6 +197,54 @@ function createMarker(place){
     });
 }
 
+function createMarkerRest(place){
+    var image = 'img/icon-rest.png';
+    var marker = new google.maps.Marker({
+        position: place.geometry.location,
+        map:map,
+        icon: image,
+        title: place.name,
+        animation: google.maps.Animation.DROP
+    });
+    places_markers[place.id] = marker;    
+    google.maps.event.addListener(marker,'click',function(){
+        infowindow = new google.maps.InfoWindow();
+        infowindow.setContent(marker.getTitle());
+        infowindow.open(map,marker);    
+    });
+}
+function createMarkerSaude(place){
+    var image = 'img/icon-sau.png';
+    var marker = new google.maps.Marker({
+        position: place.geometry.location,
+        map:map,
+        icon: image,
+        title: place.name,
+        animation: google.maps.Animation.DROP
+    });
+    places_markers[place.id] = marker;    
+    google.maps.event.addListener(marker,'click',function(){
+        infowindow = new google.maps.InfoWindow();
+        infowindow.setContent(marker.getTitle());
+        infowindow.open(map,marker);    
+    });
+}
+function createMarkerHotel(place){
+    var image = 'img/icon-hosp.png';
+    var marker = new google.maps.Marker({
+        position: place.geometry.location,
+        map:map,
+        icon: image,
+        title: place.name,
+        animation: google.maps.Animation.DROP
+    });
+    places_markers[place.id] = marker;    
+    google.maps.event.addListener(marker,'click',function(){
+        infowindow = new google.maps.InfoWindow();
+        infowindow.setContent(marker.getTitle());
+        infowindow.open(map,marker);    
+    });
+}
 function addTableRow(place){
     var html = '<tr id="'+place.id+'"><td>'+place.name+'</td><td>'+ place.vicinity+'</td><td>';
     $.each(place.types,function(i,type){
