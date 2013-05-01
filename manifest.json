@@ -8,6 +8,6 @@
       "scripts": ["main.js"]
     }
   },
-  "icons": { "16": "16x16.jpg", "128": "128x128.jpg" }
+  "icons": { "16": "img/16x16.jpg", "128": "img/128x128.jpg" }
 
 }
